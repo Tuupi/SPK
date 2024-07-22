@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        if (localStorage.getItem('dark-mode') === 'true' || (!('dark-mode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.querySelector('html').classList.add('dark');
+        } else {
+            document.querySelector('html').classList.remove('dark');
+        }
+        </script>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css"  rel="stylesheet" />
+    <link rel="stylesheet" href="/tailwind.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test server</title>
+</head>
+<body>
+    <div class="flex flex-col h-screen justify-between">
+        <%- include('partials/header') %>
+        <main class="mb-auto h-auto bg-green-500">
+            <p class="space-x-3 mx-auto p-4 md:py-8">test text</p>
+        </main>
+        <%- include('partials/footer') %>
+    </div>
+    <script>
+        const lightSwitches = document.querySelectorAll('.light-switch');
+            if (lightSwitches.length > 0) {
+            lightSwitches.forEach((lightSwitch, i) => {
+                if (localStorage.getItem('dark-mode') === 'true') {
+                lightSwitch.checked = true;
+                }
+                lightSwitch.addEventListener('change', () => {
+                const { checked } = lightSwitch;
+                lightSwitches.forEach((el, n) => {
+                    if (n !== i) {
+                    el.checked = checked;
+                    }
+                });
+                if (lightSwitch.checked) {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('dark-mode', true);
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('dark-mode', false);
+                }
+                });
+            });
+            }
+    </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
+</body>
+</html>
