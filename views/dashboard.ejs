@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promethee DSS Admin</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Add click event listeners to the navigation links
+      document.querySelectorAll("nav a").forEach(function(link) {
+        link.addEventListener("click", function(event) {
+          event.preventDefault();
+          // Hide all the content sections
+          document.querySelectorAll(".content-section").forEach(function(section) {
+            section.style.display = "none";
+          });
+          // Show the corresponding content section
+          var sectionId = this.getAttribute("href");
+          document.querySelector(sectionId).style.display = "block";
+        });
+      });
+
+      // Display the initial dashboard content
+      document.querySelector("#dashboard").style.display = "block";
+    });
+  </script>
+</head>
+<body class="font-sans bg-gray-100">
+  <div class="flex h-screen">
+    <!-- Sidebar -->
+    <div class="bg-gray-800 text-white p-6 h-full w-64">
+      <h1 class="text-2xl font-bold mb-6">Promethee DSS</h1>
+      <nav>
+        <a href="#dashboard" class="block py-2 hover:bg-gray-700 rounded">Dashboard</a>
+        <a href="#criteria" class="block py-2 hover:bg-gray-700 rounded">Criteria</a>
+        <a href="#alternatives" class="block py-2 hover:bg-gray-700 rounded">Alternatives</a>
+        <a href="#preferences" class="block py-2 hover:bg-gray-700 rounded">Preferences</a>
+        <a href="#ranking" class="block py-2 hover:bg-gray-700 rounded">Ranking</a>
+        <a href="#reports" class="block py-2 hover:bg-gray-700 rounded">Reports</a>
+        <a href="#users" class="block py-2 hover:bg-gray-700 rounded">Users</a>
+        <a href="" class="block py-2 hover:bg-gray-700 rounded">logout</a>
+      </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 p-8">
+      <!-- Dashboard -->
+      <div id="dashboard" class="content-section">
+        <h2 class="text-2xl font-bold mb-4">Dashboard</h2>
+        <div class="grid grid-cols-3 gap-8">
+          <div class="bg-white shadow-md rounded p-6">
+            <h3 class="text-xl font-bold mb-2">Total Criteria</h3>
+            <p class="text-4xl font-bold">12</p>
+          </div>
+          <div class="bg-white shadow-md rounded p-6">
+            <h3 class="text-xl font-bold mb-2">Total Alternatives</h3>
+            <p class="text-4xl font-bold">36</p>
+          </div>
+          <div class="bg-white shadow-md rounded p-6">
+            <h3 class="text-xl font-bold mb-2">Total Users</h3>
+            <p class="text-4xl font-bold">8</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Criteria -->
+      <div id="criteria" class="content-section" style="display: none;">
+        <h2 class="text-2xl font-bold mb-4">Criteria</h2>
+        <!-- Add your criteria content here -->
+        <div class="container mx-auto my-10">
+            <h1 class="text-3xl font-bold mb-6">Promethee DSS Criteria</h1>
+        
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+              <h2 class="text-xl font-bold mb-4">Create New Criteria</h2>
+              <form class="space-y-4" id="create-form">
+                <div>
+                  <label class="block font-medium text-gray-700 mb-2" for="name">Criteria Name</label>
+                  <input class="border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 w-full" id="name" type="text" placeholder="Enter name" required>
+                </div>
+                <div>
+                  <label class="block font-medium text-gray-700 mb-2" for="description">Bobot Criteria</label>
+                  <input class="border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 w-full" id="description"  placeholder="Enter Bobot" type="number" min="1" max="5" required>
+                </div>
+                <div>
+                  <label class="block font-medium text-gray-700 mb-2" for="type">Type</label>
+                  <select class="border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 w-full" id="type" required>
+                    <option value="">Select type</option>
+                    <option value=1>Benefit</option>
+                    <option value=0>Cost</option>
+                  </select>
+                </div>
+                <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" type="submit">Create</button>
+              </form>
+            </div>
+        
+            <div class="bg-white rounded-lg shadow-lg p-6">
+              <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold">Criteria</h2>
+                <div class="flex items-center">
+                  <input class="border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 mr-4" type="text" placeholder="Search...">
+                  <nav class="flex items-center">
+                    <a class="px-3 py-2 rounded-md hover:bg-gray-200" href="#">Prev</a>
+                    <span class="px-3 py-2">1</span>
+                    <a class="px-3 py-2 rounded-md hover:bg-gray-200" href="#">Next</a>
+                  </nav>
+                </div>
+              </div>
+              <table class="w-full table-auto" id="criteria-table">
+                <thead>
+                  <tr class="bg-gray-200">
+                    <th class="px-4 py-2 text-left">ID</th>
+                    <th class="px-4 py-2 text-left">Name</th>
+                    <th class="px-4 py-2 text-left">Bobot</th>
+                    <th class="px-4 py-2 text-left">Cost or Benefit</th>
+                    <th class="px-4 py-2 text-left">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- <tr class="border-b">
+                    <td class="px-4 py-2">Criterion 1</td>
+                    <td class="px-4 py-2">This is the description for Criterion 1.</td>
+                    <td class="px-4 py-2">true</td>
+                    <td class="px-4 py-2">
+                      <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded mr-2">Edit</button>
+                      <button class="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded">Delete</button>
+                    </td>
+                  </tr> -->
+                  <!-- Add more rows as needed -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <script>
+            const createForm = document.getElementById('create-form');
+            const criteriaTable = document.getElementById('criteria-table').getElementsByTagName('tbody')[0];
+        
+            // Fetch and display criteria data
+            fetch('/criteria')
+              .then(response => response.json())
+              .then(data => {
+                data.forEach(criteria => {
+                  const row = document.createElement('tr');
+                  row.innerHTML = `
+                    <td class="border px-4 py-2">${criteria.id_criteria}</td>
+                    <td class="border px-4 py-2">${criteria.criteria_name}</td>
+                    <td class="border px-4 py-2">${criteria.criteria_bobot}</td>
+                    <td class="border px-4 py-2">${!!criteria.Benefit}</td>
+                    <td class="border px-4 py-2">
+                      <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded mr-2 edit-btn" data-id="${criteria.id}">Edit</button>
+                      <button class="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded delete-btn" data-id="${criteria.id}">Delete</button>
+                    </td>
+                  `;
+                  criteriaTable.appendChild(row);
+                });
+              })
+              .catch(error => console.error(error));
+        
+            // Create new criteria
+            createForm.addEventListener('submit', (event) => {
+              event.preventDefault();
+              const name = document.getElementById('name').value;
+              const description = document.getElementById('description').value;
+              const type = document.getElementById('type').value;
+        
+              fetch('/criteria', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, description, type })
+              })
+              .then(response => response.json())
+              .then(data => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                  <td class="border px-4 py-2" id="idrow">${data.id}</td>
+                  <td class="border px-4 py-2" id="namerow">${name}</td>
+                  <td class="border px-4 py-2" id="descrow">${description}</td>
+                  <td class="border px-4 py-2" id="typerow">${!!type}</td>
+                  <td class="border px-4 py-2">
+                    <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded mr-2 edit-btn" data-id="${data.id}">Edit</button>
+                    <button class="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded delete-btn" data-id="${data.id}">Delete</button>
+                  </td>
+                `;
+                criteriaTable.appendChild(row);
+                createForm.reset();
+              })
+              .catch(error => console.error(error));
+            });
+        
+            // Edit and update criteria
+            criteriaTable.addEventListener('click', (event) => {
+                const id = event.target.dataset.id;
+                const row = event.target.closest('tr');
+                const nameCell = row.cells[1];
+                const descriptionCell = row.cells[2];
+                const typeCell = row.cells[3];
+              if (event.target.classList.contains('edit-btn')) {
+                nameCell.innerHTML = `<input type="text" class="border rounded px-3 py-2 w-full" value="${nameCell.textContent}" required>`;
+                descriptionCell.innerHTML = `<input type="number" min="1" max="5" class="border rounded px-3 py-2 w-full" value="${descriptionCell.textContent}" required>`;
+                typeCell.innerHTML = `<input type="text" class="border rounded px-3 py-2 w-full" value="${!!typeCell.textContent}" required>`;
+        
+                const updateBtn = document.createElement('button');
+                updateBtn.classList.add('bg-green-500', 'hover:bg-green-600', 'text-white', 'font-bold', 'py-1', 'px-2', 'rounded', 'mr-2','update-btn');
+                updateBtn.textContent = 'Update';
+                updateBtn.dataset.id = id;
+                row.cells[4].appendChild(updateBtn);
+        
+                event.target.style.display = 'none';
+              } else if (event.target.classList.contains('update-btn')) {
+                const row = event.target.closest('tr');
+                const id = Number(row.cells[0].textContent);
+                const nameInput = row.cells[1].querySelector('input');
+                const descriptionInput = row.cells[2].querySelector('input');
+                const typeInput = row.cells[3].querySelector('input');
+        
+                fetch(`/criteria/${id}`, {
+                  method: 'PUT',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                    name: nameInput.value,
+                    description: descriptionInput.value,
+                    type: typeInput.value
+                  })
+                })
+                .then(response => console.log(response.json()))
+                
+                .then(data => {
+                    
+                nameCell.innerHTML = `<td class="border px-4 py-2" id="namerow">${nameInput.value}</td>`;
+                descriptionCell.innerHTML = `<td class="border px-4 py-2" id="desrow">${descriptionInput.value}</td>`;
+                typeCell.innerHTML =`<td class="border px-4 py-2" id="typerow">${!!typeInput.value}</td>`;;
+                event.target.style.display = 'none';
+                row.cells[4].querySelector('.edit-btn').style.display = 'inline-block';
+                    
+                  
+                })
+                .catch(error => console.error(error));
+              }
+            });
+        
+            // Delete criteria
+            criteriaTable.addEventListener('click', (event) => {
+              if (event.target.classList.contains('delete-btn')) {
+                const row = event.target.closest('tr');
+                const id = Number(row.cells[0].textContent);
+                fetch(`/criteria/${id}`, {
+                  method: 'DELETE'
+                })
+                .then(response => response.json())
+                .then(data => {
+                  event.target.closest('tr').remove();
+                })
+                .catch(error => console.error(error));
+              }
+            });
+          </script>
+      </div>
+
+      <!-- Alternatives -->
+      <div id="alternatives" class="content-section" style="display: none;">
+        <h2 class="text-2xl font-bold mb-4">Alternatives</h2>
+        <!-- Add your alternatives content here -->
+      </div>
+
+      <!-- Preferences -->
+      <div id="preferences" class="content-section" style="display: none;">
+        <h2 class="text-2xl font-bold mb-4">Preferences</h2>
+        <!-- Add your preferences content here -->
+      </div>
+
+      <!-- Ranking -->
+      <div id="ranking" class="content-section" style="display: none;">
+        <h2 class="text-2xl font-bold mb-4">Ranking</h2>
+        <!-- Add your ranking content here -->
+      </div>
+
+      <!-- Reports -->
+      <div id="reports" class="content-section" style="display: none;">
+        <h2 class="text-2xl font-bold mb-4">Reports</h2>
+        <!-- Add your reports content here -->
+      </div>
+
+      <!-- Users -->
+      <div id="users" class="content-section" style="display: none;">
+        <h2 class="text-2xl font-bold mb-4">Users</h2>
+        <!-- Add your users content here -->
+      </div>
+    </div>
+  </div>
+</body>
+</html>
