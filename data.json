@@ -1,0 +1,10 @@
+{
+  "alternatives": [
+    "Test1",
+    "test2"
+  ],
+  "criteria": [
+    "krit1",
+    "krit2"
+  ]
+}

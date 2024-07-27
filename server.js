@@ -1,9 +1,10 @@
 const express = require('express');
 const session = require('express-session');
-const connection = require('./config/db')
+const fs = require('fs');
 const path = require('path');
 const app = express();
 const bodyParser = require('body-parser');
+const filePath = path.join(__dirname, 'data.json');
 
 app.use(session({
     secret: "secretkey",
@@ -49,7 +50,7 @@ res.redirect('/dashboard');
 
 app.get('/dashboard', (req, res)=>{
 if (req.session.user != null){
-    res.render('dashboard', { user: req.session.user })
+    res.render('main', { user: req.session.user })
 } else {
     res.redirect('/login')
 }
@@ -98,4 +99,19 @@ connection.query('DELETE FROM criteria WHERE id_criteria = ?', [id], (err, resul
     res.json({ message: 'Criteria deleted' });
 });
 });
+
+app.get('/data', (req, res) => {
+    if (!fs.existsSync(filePath)) {
+      return res.json({ alternatives: [], criteria: [] });
+    }
+    const data = fs.readFileSync(filePath);
+    res.json(JSON.parse(data));
+  });
+  
+  // Save data
+  app.post('/data', (req, res) => {
+    const data = req.body;
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+    res.sendStatus(200);
+  });
   

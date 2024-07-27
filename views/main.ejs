@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SPK Metode Promethee</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <h1 class="text-center">Sistem Pendukung Keputusan - Metode Promethee</h1>
+    <hr>
+
+    <div class="mb-4">
+      <h3>Alternatif</h3>
+      <div id="alternatives" class="mb-3"></div>
+      <button class="btn btn-primary" onclick="addAlternative()">Tambah Alternatif</button>
+    </div>
+
+    <div class="mb-4">
+      <h3>Kriteria</h3>
+      <div id="criteria" class="mb-3"></div>
+      <button class="btn btn-primary" onclick="addCriteria()">Tambah Kriteria</button>
+    </div>
+
+    <div class="mb-4">
+      <h3>Nilai Bobot dan Tipe Kriteria</h3>
+      <div id="weights"></div>
+    </div>
+
+    <button class="btn btn-success" onclick="calculatePromethee()">Hitung Promethee</button>
+
+    <div class="mt-4">
+      <h3>Hasil Perhitungan</h3>
+      <div id="results"></div>
+    </div>
+  </div>
+  <script>
+  </script>
+  <script src="../script.js"></script>
+</body>
+</html>
